@@ -1,0 +1,27 @@
+#JSON Configuration template for cisco_ios. You can add multiple devices inside the "devices" section.
+#Each iteration (multiple list items, multiple JSON items, and etc) are separated by commas (,) as JSON standard.
+
+{
+	"devices" : [
+			{
+				"model" : "cisco_ios",
+				"remote-protocol" : "<protocol here>",
+				"ip" : "<ip here>",
+				"port" : "<port here>",
+				"username" : "<optional if used>",
+				"password" : "<optional if used>",
+				"secret" : "<optional if used>",
+				"user_exec" : [
+						"user_exec_commands_here_with_comma_separator_for_each_command"
+					],
+				"priv_exec" : [
+						"privileged_exec_commands_here_with_comma_separator_for_each_command"
+					],
+				"global_config" : [
+						"global_config_commands_here_with_comma_separator_for_each_command"
+					]
+			}
+	]
+}
+
+

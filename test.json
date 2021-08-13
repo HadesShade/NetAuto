@@ -1,0 +1,22 @@
+{
+	"devices" : [
+			{
+				"model" : "cisco_ios",
+				"remote-protocol" : "telnet",
+				"ip" : "192.168.88.200",
+				"port" : "32769",
+				"username" : "admin",
+				"password" : "admin",
+				"secret" : "cisco123",
+
+				"global_config" : [
+							"hostname ROUTER-1"
+				],
+
+				"priv_exec" : [
+							"write",
+							"show ip int br"
+				]
+			}
+	]
+}
