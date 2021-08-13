@@ -1,6 +1,6 @@
 import json
 from json import JSONDecodeError
-import dictionaries as dict
+import global_libs.dictionaries as dict
 
 def ParseCiscoIOSConfig(configJSON):
 	user_exec_config = []

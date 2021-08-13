@@ -1,8 +1,8 @@
 import json
 from json import JSONDecodeError
-import dictionaries as dict
-import cisco_ios_config_parser as IOSParser
-import cisco_ios_process as IOSProcess
+import global_libs.dictionaries as dict
+import cisco_ios.cisco_ios_config_parser as IOSParser
+import cisco_ios.cisco_ios_process as IOSProcess
 
 def ParseDeviceIdentity(deviceJSON):
 	deviceIdentity = {}
