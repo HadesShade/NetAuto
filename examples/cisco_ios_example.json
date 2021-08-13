@@ -8,6 +8,7 @@
 				"username" : "admin",
 				"password" : "admin",
 				"secret" : "cisco123",
+				"verbose" : false,
 
 				"global_config" : [
 							"hostname ROUTER-1"

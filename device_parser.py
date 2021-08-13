@@ -3,6 +3,8 @@ from json import JSONDecodeError
 import global_libs.dictionaries as dict
 import cisco_ios.cisco_ios_config_parser as IOSParser
 import cisco_ios.cisco_ios_process as IOSProcess
+import cisco_asa.cisco_asa_process as ASAProcess
+import cisco_asa.cisco_asa_config_parser as ASAParser
 
 def ParseDeviceIdentity(deviceJSON):
 	deviceIdentity = {}
@@ -26,6 +28,12 @@ def ParseDeviceIdentity(deviceJSON):
 			AddOptionalDeviceIdentity(deviceJSON, deviceIdentity)
 			IOSProcess.ProcessCiscoIOSCommands(deviceIdentity, IOSParser.ParseCiscoIOSConfig(deviceJSON))
 
+		elif deviceJSON['model'].lower() == "cisco_asa":
+			deviceIdentity['device_type'] = (deviceJSON['model'].lower()+"_"+deviceJSON['remote-protocol']) if deviceJSON['remote-protocol'].lower() == "telnet" else deviceJSON['model'].lower()
+			deviceIdentity['ip'] = deviceJSON['ip']
+			AddOptionalDeviceIdentity(deviceJSON, deviceIdentity)
+			ASAProcess.ProcessCiscoASACommands(deviceIdentity, ASAParser.ParseCiscoASAConfig(deviceJSON))
+
 		elif deviceJSON['model'].lower() == "mikrotik":
 			#There will device identity generated for mikrotik device
 			print ("Mikrotik not supported yet!")
@@ -37,7 +45,7 @@ def ParseDeviceIdentity(deviceJSON):
 
 
 def AddOptionalDeviceIdentity(deviceJSON, deviceIdentity):
-	for key in dict.optional_device_keys:
+	for key in dict.additional_device_keys:
 		if key in deviceJSON:
 			deviceIdentity[key] = deviceJSON[key]
 

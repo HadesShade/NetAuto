@@ -5,7 +5,7 @@
 {
 	"devices" : [
 			{
-				"model" : "cisco_ios",
+				"model" : "cisco_asa",
 				"remote-protocol" : "<protocol here>",
 				"ip" : "<ip here>",
 				"port" : "<port here>",

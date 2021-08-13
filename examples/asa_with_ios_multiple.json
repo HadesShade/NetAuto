@@ -1,0 +1,50 @@
+{
+	"devices" : [
+			{
+				"model" : "cisco_ios",
+				"remote-protocol" : "telnet",
+				"ip" : "192.168.88.200",
+				"port" : "32769",
+				"username" : "admin",
+				"password" : "admin",
+				"secret" : "cisco123",
+				"verbose" : false,
+
+				"global_config" : [
+							"hostname ROUTER-1",
+							"interface e0/0",
+							"no sh",
+							"ip address 192.168.10.1 255.255.255.0",
+							"description TO-ASA"
+				],
+
+				"priv_exec" : [
+							"write",
+							"show ip int br"
+				]
+			},
+
+			{
+				"model" : "cisco_asa",
+				"remote-protocol" : "ssh",
+				"ip" : "192.168.88.7",
+				"username" : "admin",
+				"password" : "admin",
+				"verbose" : false,
+
+				"global_config" : [
+							"hostname ASA-1",
+							"interface gi0/1",
+							"no sh",
+							"nameif outside",
+							"ip address 192.168.10.2 255.255.255.0",
+							"description TO-ROUTER"
+				],
+
+				"priv_exec" : [
+							"write",
+							"show int ip br"
+				]
+			}
+	]
+}

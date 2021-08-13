@@ -7,6 +7,12 @@ def bypass_initial_configuration(prompt,conn):
 		prompt = conn.find_prompt()
 		print ('Bypassing Initial Configuration' + prompt)
 
+def bypass_error_reporting(prompt,conn):
+	if "[Y]es" in prompt or '[N]o' in prompt or '[A]sk' in prompt or 'anonymous error reporting' in prompt or 'the product' in prompt:
+		conn.send_command_timing("A\n")
+		prompt = conn.find_prompt()
+		print ('Bypassing Error Reporting Configuration' + prompt)
+
 def ProcessUserExecCommand(ConfigCommands,conn):
 	for command in ConfigCommands:
 		print (conn.send_command(command))
@@ -17,20 +23,22 @@ def ProcessPrivilegedExecCommand(ConfigCommands,conn):
 		print (conn.send_command(command))
 
 def ProcessGlobalCommand(ConfigCommands,conn):
-	print (conn.enable('enable'))
-	print (conn.config_mode("configure terminal"))
+#	print (conn.enable('enable'))
+#	print (conn.config_mode("configure terminal"))
+	prompt = conn.find_prompt()
+	bypass_error_reporting(prompt, conn)
 	print (conn.send_config_set(ConfigCommands))
 
-def ProcessCiscoIOSCommands(DeviceIdentity, ConfigLists,count=0):
+def ProcessCiscoASAWithSSH(DeviceIdentity, ConfigLists, count=0):
 	try:
 		if "port" in DeviceIdentity:
 			print ("Connecting to "+DeviceIdentity['ip']+":"+DeviceIdentity['port'])
 
 		else:
-			if DeviceIdentity['device_type'].lower() == "cisco_ios":
+			if DeviceIdentity['device_type'].lower() == "cisco_asa":
 				print ("Connecting to "+DeviceIdentity['ip']+":"+dict.default_remote_ports['ssh'])
 
-			elif DeviceIdentity['device_type'].lower() == "cisco_ios_telnet":
+			elif DeviceIdentity['device_type'].lower() == "cisco_asa_telnet":
 				print ("Connecting to "+DeviceIdentity['ip']+":"+dict.default_remote_ports['telnet'])
 
 			else:
@@ -67,6 +75,14 @@ def ProcessCiscoIOSCommands(DeviceIdentity, ConfigLists,count=0):
 			ProccessCiscoIOSCommands(DEviceIdentity,ConfigLists,count)
 
 	connection.disconnect()
+
+def ProcessCiscoASACommands(DeviceIdentity, ConfigLists):
+	if DeviceIdentity['device_type'].lower() == "cisco_asa":
+		ProcessCiscoASAWithSSH(DeviceIdentity, ConfigLists)
+
+	else:
+		Print ("Only SSH still supported by this tool for Cisco ASA!")
+		exit()
 
 
 

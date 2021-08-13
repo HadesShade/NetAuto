@@ -1,0 +1,22 @@
+{
+	"devices" : [
+			{
+				"model" : "cisco_asa",
+				"remote-protocol" : "ssh",
+				"ip" : "192.168.88.7",
+				"username" : "admin",
+				"password" : "admin",
+				"user_exec" : [
+						"show version"
+					],
+				"priv_exec" : [
+						"write"
+					],
+				"global_config" : [
+						"hostname ASA-1"
+					]
+			}
+	]
+}
+
+
